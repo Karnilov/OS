@@ -1,3 +1,3 @@
 git https://github.com/Karnilov/OS/blob/main/plugin/LGP/settings.py -a -f
-sudo ---git---classes.py
+git https://github.com/Karnilov/OS/blob/main/plugin/LGP/classes.py -a -f
 git ---comm---LGP.py
