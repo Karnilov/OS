@@ -1,7 +1,5 @@
 import os
-
 dir=['adding','home','classes','settings','adding/comm']
-
 file={
 'main.py':'''
 from comm import *
@@ -12,7 +10,7 @@ def run(path):
     file = open(path).read()
     eval(path.split('.')[-1]+'(\"\"\"'+file+'\"\"\")')
 def comm(commands):
-    cmd=commands.split('\n')
+    cmd=commands.split('\\n')
     for command in cmd:
         print("\u001b[38;5;220m<<"+str(command))
         args=command.split(" ")
@@ -93,15 +91,12 @@ def git(link, *args):
             print("\u001b[38;5;10mDone")
 '''
 }
-
 for q in dir:
     print("\u001b[38;5;11mcreating direction:"+q+"...",end='')
     os.mkdir(q)
     print("\u001b[38;5;10mDone")
-
-for name, text in enumerate(dir):
-    print("\u001b[38;5;11minstalling:"+name+"...",end='')
+for name, text in file.items():
+    print("\u001b[38;5;11minstalling:"+str(name)+"...",end='')
     with open(name,'w') as f:
         f.write(text)
     print("\u001b[38;5;10mDone")
-    
