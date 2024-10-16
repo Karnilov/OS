@@ -59,7 +59,6 @@ class scc:
     def __init__(self,core):
         self.core=core
         self.millis=20
-        self.timeout=[0,0,0,0,0,0,0]
     def regulation(self):
         max=0
         while True:
