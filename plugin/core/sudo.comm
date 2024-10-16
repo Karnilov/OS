@@ -1,3 +1,1 @@
-git https://github.com/Karnilov/OS/blob/main/plugin/LGP/settings.py -f
-git https://github.com/Karnilov/OS/blob/main/plugin/LGP/classes.py -f
-git https://github.com/Karnilov/OS/tree/main/plugin/LGP/adComm -a
+git https://github.com/Karnilov/OS/tree/main/plugin/core/settings -a
