@@ -100,3 +100,5 @@ for name, text in file.items():
     with open(name,'w') as f:
         f.write(text)
     print("\u001b[38;5;10mDone")
+
+os.system('pop install request')
