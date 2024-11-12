@@ -2,17 +2,12 @@ import os
 library=['request']
 dir=['adding','home','classes','settings','adding/comm','home/auto']
 file={
-'main.py':'''
-from comm import *
+'main.py':'''from comm import *
 import threading
 import time
 import os
 connectLib=[]
 graphicMode=False
-def run(path):
-    path='home/'+path
-    file = open(path).read()
-    eval(path.split('.')[-1]+'('+file+')')
 def comm(commands):
     if commands=='': return None
     cmd=commands.split('\n')
@@ -25,7 +20,11 @@ def comm(commands):
             eval(func+"(*"+str(args)+")")
         except Exception as exc:
             print("[38;5;1m"+str(exc)+"[38;5;15m")
-            
+def run(path):
+    path='home/'+path
+    file = open(path).read()
+    for cmd in file.split('\n'):
+        eval(path.split('.')[-1]+'("'+cmd+'")')
 def connect(link):
     connectLib.append(link)
 def reload():
@@ -40,7 +39,7 @@ def reload():
     for f in connectLib:
         print("[38;5;11m"+f+"...",end='')
         try:
-            globals()[f]=importlib.import_module(f)
+            globals()[f.split('/')[-1]]=importlib.import_module(f)
             print('[38;5;10mLOAD')
         except:
             print('[38;5;1mERROR')
@@ -53,10 +52,8 @@ if not graphicMode:
         try:
             comm(input("[38;5;12m>>[38;5;15m"))
         except EOFError:
-            pass
-''',
-'comm.py':'''
-import urllib.parse
+            pass''',
+'comm.py':'''import urllib.parse
 import sys
 import requests
 import os
@@ -111,11 +108,8 @@ def git(link, *args):
             print("[38;5;10mDone")
         else:
             download_folder_contents(getUrl(link), 'home/'+link.split("/")[len(link.split("/"))-1])
-            print("[38;5;10mDone")
-''',
-'run.py':"""
-import main
-"""
+            print("[38;5;10mDone")''',
+'run.py':"""import main"""
 }
 for q in dir:
     print("\u001b[38;5;11mcreating direction:"+q+"...",end='')
