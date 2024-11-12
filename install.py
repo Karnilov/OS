@@ -1,36 +1,59 @@
 import os
-dir=['adding','home','classes','settings','adding/comm']
+library=['request']
+dir=['adding','home','classes','settings','adding/comm','home/auto']
 file={
 'main.py':'''
 from comm import *
 import threading
 import time
+import os
+connectLib=[]
+graphicMode=False
 def run(path):
     path='home/'+path
     file = open(path).read()
-    eval(path.split('.')[-1]+'(\"\"\"'+file+'\"\"\")')
+    eval(path.split('.')[-1]+'('+file+')')
 def comm(commands):
-    cmd=commands.split('\\n')
+    if commands=='': return None
+    cmd=commands.split('\n')
     for command in cmd:
-        print("\u001b[38;5;220m<<"+str(command))
+        print("[38;5;10mfor[38;5;220m<<"+str(command))
         args=command.split(" ")
         func=args[0]
         del args[0]
         try:
-            print("\u001b[38;5;5m"+str(eval(func+"(*"+str(args)+")")))
+            eval(func+"(*"+str(args)+")")
         except Exception as exc:
-            print("\u001b[38;5;1m"+str(exc)+"\u001b[38;5;15m")
+            print("[38;5;1m"+str(exc)+"[38;5;15m")
+            
+def connect(link):
+    connectLib.append(link)
 def reload():
     for f in os.listdir("adding/comm/"):
-        print("\u001b[38;5;11madding.comm."+f.split(".")[0]+"...",end='')
+        name=f.split(".")[0]
+        print("[38;5;11madding.comm."+name+"...",end='')
         try:
-            globals()[f.split(".")[0]]=importlib.import_module("adding.comm."+f.split(".")[0])
-            print('\u001b[38;5;10mLOAD')
+            globals()[name]=importlib.import_module("adding.comm."+name)
+            print('[38;5;10mLOAD')
         except:
-            print('\u001b[38;5;1mERROR')
+            print('[38;5;1mERROR')
+    for f in connectLib:
+        print("[38;5;11m"+f+"...",end='')
+        try:
+            globals()[f]=importlib.import_module(f)
+            print('[38;5;10mLOAD')
+        except:
+            print('[38;5;1mERROR')
+    for f in os.listdir("home/auto/"):
+        print('runing:'+f)
+        run('auto/'+f)
 reload()
-while True:
-    comm(input("\u001b[38;5;12m>>\u001b[38;5;15m"))
+if not graphicMode:
+    while True:
+        try:
+            comm(input("[38;5;12m>>[38;5;15m"))
+        except EOFError:
+            pass
 ''',
 'comm.py':'''
 import urllib.parse
@@ -42,14 +65,14 @@ def colors():
     for i in range(0, 16):
         for j in range(0, 16):
             code = str(i * 16 + j)
-            sys.stdout.write(u"\u001b[38;5;" + code + "m " + code.ljust(4))
-        print(u"\u001b[0m")
+            sys.stdout.write(u"[38;5;" + code + "m " + code.ljust(4))
+        print(u"[0m")
 def download_file(file_url, folder_path):
     response = requests.get(file_url)
     filename = os.path.join(folder_path, file_url.split('/')[-1])
     with open(filename, 'wb') as f:
         f.write(response.content)
-        print(f'\u001b[38;5;11mСкачан файл: {filename}')
+        print(f'[38;5;11mСкачан файл: {filename}')
 def download_folder_contents(folder_url, folder_path):
     response = requests.get(folder_url)
     if response.status_code == 200:
@@ -81,15 +104,18 @@ def ls():
 def git(link, *args):
     if '-a' in args:
         download_folder_contents(getUrl(link), link.split("/")[len(link.split("/"))-1])
-        print("\u001b[38;5;10mDone")
+        print("[38;5;10mDone")
     else:
         if '-f'in args:
             download_file(getUrl(link), 'home/')
-            print("\u001b[38;5;10mDone")
+            print("[38;5;10mDone")
         else:
             download_folder_contents(getUrl(link), 'home/'+link.split("/")[len(link.split("/"))-1])
-            print("\u001b[38;5;10mDone")
-'''
+            print("[38;5;10mDone")
+''',
+'run.py':"""
+import main
+"""
 }
 for q in dir:
     print("\u001b[38;5;11mcreating direction:"+q+"...",end='')
@@ -100,5 +126,7 @@ for name, text in file.items():
     with open(name,'w') as f:
         f.write(text)
     print("\u001b[38;5;10mDone")
-
-os.system('pop install request')
+for q in library:
+    print("\u001b[38;5;11minstalling library:"+q+"...")
+    os.system('pip install '+q)
+    print("\u001b[38;5;10mDone")
