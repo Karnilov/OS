@@ -1,0 +1,2 @@
+exec transferOfControl_set(DragonConsole.ConsoleApp().run)
+brak
