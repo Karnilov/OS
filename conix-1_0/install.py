@@ -8,6 +8,13 @@ import time
 import os
 connectLib=[]
 graphicMode=False
+transferOfControl=None
+def transferOfControl_set(func):
+	global transferOfControl
+	transferOfControl=func
+def brak():
+	global graphicMode
+	graphicMode=True
 def comm(commands):
     if commands=='': return None
     cmd=commands.split('\n')
@@ -16,10 +23,7 @@ def comm(commands):
         args=command.split(" ")
         func=args[0]
         del args[0]
-        try:
-            eval(func+"(*"+str(args)+")")
-        except Exception as exc:
-            print("[38;5;1m"+str(exc)+"[38;5;15m")
+        eval(func+"(*"+str(args)+")")
 def run(path):
     path='home/'+path
     file = open(path).read()
@@ -47,12 +51,12 @@ def reload():
         print('runing:'+f)
         run('auto/'+f)
 reload()
-if not graphicMode:
-    while True:
-        try:
-            comm(input("[38;5;12m>>[38;5;15m"))
-        except EOFError:
-            pass''',
+while not graphicMode:
+    try:
+        comm(input("[38;5;12m>>[38;5;15m"))
+    except EOFError:
+        pass
+transferOfControl()''',
 'comm.py':'''import urllib.parse
 import sys
 import requests
