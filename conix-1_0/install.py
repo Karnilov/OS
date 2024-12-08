@@ -17,7 +17,7 @@ def brak():
 	graphicMode=True
 def comm(commands):
     if commands=='': return None
-    cmd=commands.split('\n')
+    cmd=commands.split('\\n')
     for command in cmd:
         print("[38;5;10mfor[38;5;220m<<"+str(command))
         args=command.split(" ")
