@@ -1,5 +1,5 @@
 import os
-library=['request']
+library=['requests']
 dir=['adding','home','classes','settings','adding/comm','home/auto']
 file={
 'main.py':'''from comm import *
@@ -121,8 +121,8 @@ for q in dir:
     print("\u001b[38;5;10mDone")
 for name, text in file.items():
     print("\u001b[38;5;11minstalling:"+str(name)+"...",end='')
-    with open(name,'w') as f:
-        f.write(text)
+    with open(name,'wb') as f:
+        f.write(text.encode('utf-8'))
     print("\u001b[38;5;10mDone")
 for q in library:
     print("\u001b[38;5;11minstalling library:"+q+"...")
