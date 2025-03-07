@@ -27,7 +27,7 @@ def comm(commands):
 def run(path):
     path='home/'+path
     file = open(path).read()
-    for cmd in file.split('\n'):
+    for cmd in file.split('\\n'):
         eval(path.split('.')[-1]+'("'+cmd+'")')
 def connect(link):
     connectLib.append(link)
